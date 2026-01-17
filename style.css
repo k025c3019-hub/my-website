@@ -1,0 +1,51 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #111;
+  color: #eee;
+}
+header {
+  background: #b00000;
+  text-align: center;
+  padding: 20px;
+}
+header ol ul {
+    list-style-type: none;
+    margin: 20px 0;
+    padding: 0;
+    display: flex;
+}
+header ol ul li a,
+header ol ul li a:link,
+header ol ul li a:visited {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000;
+}
+header ol ul li a:hover {
+    color: #eeeeee;
+}
+.profile {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+}
+.profile img{
+  width: 250px;
+  border-radius: 10px;
+}
+h2 {
+  border-left: 6px solid #b00000;
+  padding-left: 10px;
+  color: #b00000;
+}
+#red{
+  color:red;
+}
+footer {
+text-align: center;
+padding: 20px;
+background: #000;
+color: #b00000;
+}
