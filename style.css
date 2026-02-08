@@ -1,19 +1,23 @@
 body {
-  font-family: sans-serif;
+  font-family:sans-serif;
   margin: 0;
   background: #111;
-  color: #eee;
+  color: #eeee;
 }
 header {
+  position:sticky;
+  top:0;
   background: #b00000;
   text-align: center;
   padding: 20px;
+  z-index: 1000;
 }
 header ol ul {
     list-style-type: none;
-    margin: 20px 0;
+    margin: 20px 10px;
     padding: 0;
     display: flex;
+    color:#ffff00
 }
 header ol ul li a,
 header ol ul li a:link,
@@ -21,10 +25,11 @@ header ol ul li a:visited {
     display: block;
     padding: 10px 15px;
     text-decoration: none;
-    color: #000;
+    color: #eeeeee;
 }
 header ol ul li a:hover {
-    color: #eeeeee;
+    color: #ffff00;
+    padding:15px;
 }
 .profile {
   display: flex;
@@ -39,13 +44,131 @@ h2 {
   border-left: 6px solid #b00000;
   padding-left: 10px;
   color: #b00000;
-}
-#red{
-  color:red;
+  z-index: 1000;
 }
 footer {
 text-align: center;
 padding: 20px;
 background: #000;
 color: #b00000;
+}
+.slide {
+  transform: translateX(-50px);
+  opacity: 0;
+  animation: slideIn 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.box{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+.box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.form-container {
+  background: #b00000;
+  color:#eeeeee;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+input[type="text"],
+  textarea,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+textarea {
+  height: 100px;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ffff00;
+  color: #0e0909;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background: #ffff00;
+}
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin-left: 40px;
+}
+
+.event {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.year {
+  width: 80px;
+  text-align: right;
+  margin-right: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+.month {     
+  width: 10px;   
+  text-align: right; 
+  margin-right: 20px;
+  color: #aaa;       
+  font-size: 14px;   
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #ff4444;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.content {
+  flex: 1px;
+}
+.label {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.top-right{
+  position:absolute;
+  top:20px;
+  right:20px;
+}
+.top-right {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    color:#ffff00
+}
+.top-right a,
+.top-right a:link,
+.top-right a:visited {
+    color: #eeeeee;
+    text-decoration: none;
+}
+.top-right a:hover {
+    color: #ffff00;
+    padding:15px;
 }
