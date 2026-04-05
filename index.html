@@ -1,70 +1,440 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>赤い彗星の軌跡</title>
-    <link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<title>赤い彗星の軌跡</title>
+
+<style>
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: #000;
+  color: #eee;
+  font-family:  sans-serif;
+}
+
+canvas#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: block;
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px;
+}
+h1 {
+  font-size: 36px;
+  color: #ff4444;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px #ff0000;
+  animation: pulseTitle 2.5s ease-in-out infinite;
+}
+@keyframes pulseTitle {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 10px #ff0000;
+  }
+  50% {
+    transform: scale(1.08);
+    text-shadow: 0 0 40px #ff0000;
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 10px #ff0000;
+  }
+}
+h2 {
+  border-left: 6px solid #b00000;
+  padding-left: 10px;
+  color: #b00000;
+  margin-top: 60px;
+  box-shadow: 0 5px 0 #b00000;
+}
+
+.timeline {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+.event {
+  opacity: 0;                 
+  transform: translateY(50px);
+  transition: 1s ease;
+}
+.event.show {
+  opacity: 1;                 
+  transform: translateY(0);
+}
+.year { width: 100px; color: #ff0000; }
+.month { width: 50px; color: #FFD700; }
+.dot {
+  height: 14px;
+  background: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #FFD700;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0% { box-shadow:0 0 5px #FFD700;}50%{box-shadow:0 0 20px #FFD700;}100%{box-shadow:0 0 5px #FFD700;} }
+.content {
+  flex: 1;
+  background: #1a1a1a;
+  padding: 15px 20px;
+  border-left: 3px solid #b00000;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+.content:hover{
+  background:#300000;
+  transform: scale(1.03);
+}
+.ripple {
+  position: fixed;
+  border: 3px solid #ff0000; 
+  box-shadow: 0 0 30px #ff0000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: rippleEffect 1.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 9999;
+}
+@keyframes rippleEffect {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  to {
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+  }
+}
+</style>
 </head>
+
 <body>
+<canvas id="stars"></canvas>
 <header>
-    <h1>赤い彗星の軌跡</h1>
-    <div class="top-right"><a href="index7.html">年表ver</a></div>
-    <OL>
-        <ul>
-            <li>幼少期からルウム戦役</li>
-            <li><a href="index2.html">機動戦士ガンダム</a></li>
-            <li><a href="index3.HTML">機動戦士Zガンダム</a></li>
-            <li><a href="index4.html">機動戦士ガンダム -逆襲のシャア-</a></li>
-            <li><a href="index5.html">機動戦士ガンダムUC(番外編)</a></li>
-            <li><a href="index6.html">ご感想フォーム</a>
-        </ul>
-    </OL>
+  <h1>赤い彗星の軌跡</h1>
 </header>
 
-<main>
-    <section class="profile">
-        <p class="slide"><image src="https://github.com/k025c3019-hub/my-website/blob/main/361623.png?raw=true" alt="シャアアズナブル"></image></p>
-        <ul class="slide">
-            <li><strong>名前：</strong>シャア・アズナブル</li>
-            <li><strong>本名：</strong>キャスバル・レム・ダイクン</li>
-            <li><strong>通称：</strong>赤い彗星</li>
-            <li><strong>所属：</strong>ジオン公国,アクシズ,エゥー ゴ,新生ネオ・ジオン</li>
-            <li><strong>搭乗機(機動戦士ガンダム)：</strong>ザク,ズゴック,ゲルググ,ジオング</li>
-            <li><strong>搭乗機(機動戦士Zガンダム):</strong>リック・ディアス,百式</li>
-            <li><strong>搭乗機(機動戦士ガンダム 逆襲のシャア):</strong>サザビー</li>
-        </ul>
-    </section>
-    <section class="content">
-        <h2>幼少期</h2>
-        <p class="box">宇宙世紀0059年、キャスバル・レム・ダイクンは思想家「ジオン・ズム・ダイクン」の長男として生まれる。後継者として英才教育を施される。宇宙世紀0069年、父ジオンが病気で急死、彼が建国したジオン公国の実権は有力一族であるザビ家に渡ることとなり、ダイクン一族はザビ家から迫害を受けることになる。
-        この迫害から逃れるために父ジオンのよき理解者であったジンバ・ラルを頼り、母を残し地球の南欧にあるマス家に養子入りをする。この時に自身を「エドワウ・マス」と名乗る。
-        記録上ジオン・ズム・ダイクンは病死とされているがエドワウはザビ家による暗殺と見ており父を殺し、母から永遠に引き離される原因を作ったザビ家への復讐を誓う。
-        </p>
-        <h2>潜入時代</h2>
-        <p class="box">宇宙世紀0074年、エドワウは「シャア・アズナブル」を名乗り、ジオン士官学校に入学。この時にザビ家の末子「ガルマ・ザビ」と出会い親交を深める。その後、親友のガルマを焚き付け「暁の蜂起」と呼ばれる地球連邦に対しての反乱を起こし、派遣されていた連邦の治安部隊を制圧している。この時に、寮の同室だった友人からトレドマークと言えるマスクを貰いその後も着用している。宇宙世紀0078年、卒業とともにジオン公国国防軍に入隊。その後、国防軍が「宇宙攻撃軍」と「突撃機動軍」に分割されるとシャアは宇宙攻撃軍に入隊する。</p>
-    </section>
-    <section class="content">
-        <h2>赤い彗星</h2>
-        <p class="box">宇宙世紀0079年、地球連邦とジオン公国との間に「一年戦争」が勃発。シャアは愛機のモビルスーツ「ザク（シャア専用ザク）」に乗り、「ルウム戦役」にてたった一人で戦艦5隻を沈めるという活躍をし、「赤い彗星」という異名で連邦軍から恐れられることになる。また、この活躍で中尉から少佐に昇格し、専用艦とモビルスーツ中隊が与えられる。
-        </p>
-    </section>
-</main>
-<footer>
-    <p>© Fan-made Character Introduction</p>
-</footer>
+<div class="timeline">
+    <h2>赤い彗星誕生</h2>
+      <div class="event">
+      <div class="year">U.C.0059</div>
+      <div class="month"></div>
+      <div class="dot"></div>
+      <div class="content">
+        思想家ジオン・ズム・ダイクンの長男として誕生
+      </div>
+    </div>
+    <div class="event">
+        <div class="year">U.C.0069</div>
+        <div class="month"></div>
+        <div class="dot"></div>
+        <div class="content">
+            父,ジオンが死亡。ザビ家からの迫害を受ける。
+        </div>
+    </div>
+    <div class="event">
+        <div class="year">U.C.0074</div>
+        <div class="month"></div>
+        <div class="dot"></div>
+        <div class="content">
+            ザビ家への復讐のため、シャア・アズナブルを名乗りジオン軍士官学校に入学。
+        </div>
+    </div>
+    <div class="event">
+      <div class="year">U.C.0079</div>
+      <div class="month">1月</div>
+      <div class="dot"></div>
+      <div class="content">
+        地球連邦との間に一年戦争勃発。ルウム戦役にて戦艦5隻を沈める。
+      </div>
+    </div>
+    <h2>機動戦士ガンダム</h2>
+    <div class="event">
+        <div class="year"></div>
+        <div class="month">9月</div>
+        <div class="dot"></div>
+        <div class="content">
+            新造艦「ホワイトベース」を補足。その先で連邦の新型MS（モビルスーツ）「ガンダム」と交戦。
+        </div>
+    </div>
+    <div class="event">
+        <div class="year"></div>
+        <div class="month">10月</div>
+        <div class="dot"></div>
+        <div class="content">
+            幾度の交戦でホワイトベースを地球に誘導する。地球での戦いでザビ家の末子「ガルマ・ザビ」を誅殺する。
+        </div>
+    </div>
+    <div class="event">
+        <div class="year"></div>
+        <div class="month"></div>
+        <div class="dot"></div>
+        <div class="content">
+            ガルマの死亡により左遷。
+        </div>
+    </div>
+    <div class="event">
+        <div class="year"></div>
+        <div class="month">11月</div>
+        <div class="dot"></div>
+        <div class="content">
+            ザビ家の「キシリア・ザビ」により軍に復帰。連邦軍の本拠地ジャブローへの攻撃を企てるが失敗。
+        </div>
+    </div>
+    <div class="event">
+        <div class="year"></div>
+        <div class="month">12月</div>
+        <div class="dot"></div>
+        <div class="content">
+            ニュータイプの素質がある少女「ララァ・スン」とともに幾度か出撃、多数の戦艦を沈める。その後、二人は共闘してガンダムと交戦するがこの戦いでララァが死亡。（シャア、アムロ二人の因縁の始まり）
+        </div>
+    </div>
+    <div class="event">
+        <div class="year"></div>
+        <div class="month"></div>
+        <div class="dot"></div>
+        <div class="content">
+            ア・バオア・クー攻防戦が勃発。ニュータイプ専用機「ジオング」で出撃し、ガンダムと相打ちになる。その後、艦で逃げようとしたキシリアを誅殺し、命からがら脱出する。この戦いの敗北によりジオン公国は連邦に降伏する。
+        </div>
+    </div>
+    <h2>機動戦士Zガンダム</h2>
+    <div class="event">
+      <div class="year">U.C.0087</div>
+      <div class="month">3月</div>
+      <div class="dot"></div>
+      <div class="content">
+        ティターンズの拠点を攻撃、新型MSの奪取に成功する。この出来事をきっかけに「グリプス戦役」が始まる。
+      </div>
+    </div>
+    <div class="event">
+      <div class="year"></div>
+      <div class="month">5月</div>
+      <div class="dot"></div>
+      <div class="content">
+        ジャブローへの攻撃のために地球へ降下する。ジャブローへの攻撃は本部が既に移動していたため失敗、その後、アムロと再会する。アムロの協力もあり地球からの離脱に成功する。
+      </div>
+    </div>
+    <div class="event">
+      <div class="year"></div>
+      <div class="month">8月</div>
+      <div class="dot"></div>
+      <div class="content">
+        エゥーゴ指導者「ブレックス・フォーラー」と共に連邦議会へ出席する。その最中、ティターンズによりブレックスが暗殺されてしまう。ブレックスの死によりエゥーゴの新たな指導者となる。
+      </div>
+    </div>
+    <div class="event">
+      <div class="year"></div>
+      <div class="month">10月</div>
+      <div class="dot"></div>
+      <div class="content">
+        アクシズとの同盟のために赴くが、ハマーンとの交渉が決裂し失敗する。
+      </div>
+    </div>
+    <div class="event">
+      <div class="year"></div>
+      <div class="month">11月</div>
+      <div class="dot"></div>
+      <div class="content">
+        ティターンズの拠点があるキリマンジャロへの攻撃をし制圧に成功する。（唯一のアムロとの共闘）その後、世論を味方にするべく連邦議会を占拠しテレビ中継での演説をする。結果、演説の最中でのティターンズの攻撃が民間人に被害を与えたため世論の味方に成功する。
+      </div>
+    </div>
+    <div class="event">
+      <div class="year">U.C.0088</div>
+      <div class="month">2月</div>
+      <div class="dot"></div>
+      <div class="content">
+        エゥーゴ、ティターンズ、アクシズの三つ巴の戦いが勃発する。先の作戦でティターンズから奪取していたコロニーレーザー（ビーム兵器）を使いティターンズ艦隊の撃破に成功する。（この損害によりティターンズは壊滅する）その後のハマーンとの戦いの最中、戦艦が爆発しクワトロは消息不明となる。
+      </div>
+    </div>
+    <h2>機動戦士ガンダム -逆襲のシャア-</h2>
+    <div class="event">
+      <div class="year">U.C.0093</div>
+      <div class="month">3月</div>
+      <div class="dot"></div>
+      <div class="content">
+        ジオン・ズム・ダイクンの遺児「シャア・アズナブル」として「新生ネオ・ジオン」を率いて地球連邦へ宣戦布告する。最初の攻撃として小惑星「5thルナ」を連邦政府本部へ落とすことに成功している。
+      </div>
+    </div>
+    <div class="event">
+      <div class="year"></div>
+      <div class="month"></div>
+      <div class="dot"></div>
+      <div class="content">
+        アクシズ落としを決行するが、アムロに敗北する。その後、アムロと共に消息不明となる。
+      </div>
+    </div>
+    </div>
+</body>
+</html>
 <script>
-    const boxes = document.querySelectorAll('.box');
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let w,h;
+function resize(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; }
+resize();
+window.addEventListener("resize", resize);
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
+let scrollY = 0;
+window.addEventListener('scroll',()=>{ scrollY = window.scrollY; });
+const events = document.querySelectorAll(".event");
+
+function showTimelineSequentially() {
+  events.forEach((event, index) => {
+    setTimeout(() => {
+      event.classList.add("show"); 
+    }, index * 600); 
   });
+}
 
-  boxes.forEach(box => observer.observe(box));
+window.addEventListener("load", showTimelineSequentially);
+class Star {
+  constructor(){ this.reset(); }
+  reset(){
+    this.x = Math.random()*w;
+    this.y = Math.random()*h;
+    this.size = Math.random()*2+1;
+    this.depth = Math.random();
+    this.speed = 0.2*this.depth+0.02;
+  }
+  draw(){
+    ctx.fillStyle="#FFD700";
+    ctx.globalAlpha=this.depth;
+    ctx.fillRect(this.x,this.y,this.size,this.size);
+    ctx.globalAlpha=1;
+  }
+  update(){
+    this.y -= this.speed;
+    this.y += scrollY*0.0002*this.depth;
+    if(this.y<0)this.y=h;
+    if(this.y>h)this.y=0;
+    this.draw();
+    this.x += Math.sin(Date.now()*0.0002+this.depth)*0.1;
+  }
+}
+class Meteor {
+  constructor(){
+    this.reset();
+  }
+
+  reset(){
+    this.x = Math.random() * w;
+    this.y = -20;
+
+    this.speed = Math.random()*6 + 4;
+    this.angle = Math.PI/4 + (Math.random()-0.5)*0.2;
+
+    this.trail = [];
+    this.maxTrail = 25;
+
+    this.life = 1; // 🔥 追加
+    this.fadeSpeed = 0.01 + Math.random()*0.01;
+
+    this.alive = true;
+  }
+
+  update(){
+    this.x -= this.speed*Math.cos(this.angle);
+    this.y += this.speed*Math.sin(this.angle);
+
+    // 尾
+    this.trail.push({x:this.x, y:this.y});
+    if(this.trail.length > this.maxTrail){
+      this.trail.shift();
+    }
+
+    // 🔥 フェード処理
+    this.life -= this.fadeSpeed;
+
+    if(this.life <= 0){
+      this.alive = false;
+    }
+
+    this.draw();
+  }
+
+  draw(){
+    // 🔥 尾
+    for(let i=0; i<this.trail.length-1; i++){
+      const p1 = this.trail[i];
+      const p2 = this.trail[i+1];
+
+      const alpha = (i / this.trail.length) * this.life;
+
+      ctx.strokeStyle = `rgba(255,80,80,${alpha})`;
+      ctx.lineWidth = 2 + alpha * 2;
+
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    }
+
+    // 🌟 先端（フェード付き）
+    const glow = ctx.createRadialGradient(
+      this.x, this.y, 0,
+      this.x, this.y, 12
+    );
+
+    glow.addColorStop(0, `rgba(255,255,255,${this.life})`);
+    glow.addColorStop(0.3, `rgba(255,100,100,${this.life})`);
+    glow.addColorStop(1, "rgba(255,0,0,0)");
+
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 12, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+let meteors = [];
+
+const stars = [];
+for(let i=0;i<300;i++){
+  stars.push(new Star());
+}
+
+const earthImg = new Image();
+earthImg.src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg";
+let earthLoaded=false;
+earthImg.onload = ()=>{ earthLoaded=true; };
+
+document.addEventListener("click",e=>{
+  const ripple=document.createElement("div");
+  ripple.classList.add("ripple");
+  ripple.style.left=e.clientX+"px"; ripple.style.top=e.clientY+"px";
+  document.body.appendChild(ripple);
+  setTimeout(()=>{ripple.remove();},1200);
+});
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  if(earthLoaded){
+    const maxScroll=document.body.scrollHeight-window.innerHeight;
+    const progress=scrollY/maxScroll;
+    const scale=0.3+progress*0.7;
+    const earthWidth=w*scale;
+    const earthHeight=earthWidth*(earthImg.height/earthImg.width);
+    const earthX=(w-earthWidth)/2;
+    const earthY=h-earthHeight-100;
+    ctx.globalAlpha=0.7;
+    ctx.drawImage(earthImg,earthX,earthY,earthWidth,earthHeight);
+    ctx.globalAlpha=1;
+  }
+  stars.forEach(s=>s.update());
+  if(Math.random()<0.01) meteors.push(new Meteor());
+  for(let i=meteors.length-1;i>=0;i--){ meteors[i].update(); if(!meteors[i].alive) meteors.splice(i,1); }
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 </body>
-
 </html>
